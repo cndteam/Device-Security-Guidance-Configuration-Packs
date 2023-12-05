@@ -89,9 +89,10 @@ if [ "$CONFIRM" == "y" ]; then
 	sed -ie '/\s\/home\s/ s/defaults/defaults,noexec,nosuid,nodev/' /etc/fstab
 	EXISTS=$(grep "/tmp/" /etc/fstab)
 	if [ -z "$EXISTS" ]; then
-		echo "none /tmp tmpfs rw,noexec,nosuid,nodev 0 0" >> /etc/fstab
+		#echo "none /tmp tmpfs rw,noexec,nosuid,nodev 0 0" >> /etc/fstab
+ 		echo "tmp Exists"
 	else
-		sed -ie '/\s\/tmp\s/ s/defaults/defaults,noexec,nosuid,nodev/' /etc/fstab
+		#sed -ie '/\s\/tmp\s/ s/defaults/defaults,noexec,nosuid,nodev/' /etc/fstab
 	fi
 	echo "none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0" >> /etc/fstab
 	# Bind /var/tmp to /tmp to apply the same mount options during system boot
@@ -101,6 +102,9 @@ if [ "$CONFIRM" == "y" ]; then
 	echo -e "DPkg::Pre-Invoke{\"mount -o remount,exec /tmp\";};\nDPkg::Post-Invoke {\"mount -o remount /tmp\";};" >> /etc/apt/apt.conf.d/99tmpexec
 	chmod 644 /etc/apt/apt.conf.d/99tmpexec
 fi
+
+# Setting /tmp as executable for Landscape Client Scripts, Landscape Packages up the Script that you build and stores it in /tmp folder and then executes. Because of this no scripts can run from our MDM solution without having access to /tmp.
+#ENTER SED COMMAND HERE#
 
 # Set grub password.
 echo -e "${HIGHLIGHT}Configuring grub...${NC}"
