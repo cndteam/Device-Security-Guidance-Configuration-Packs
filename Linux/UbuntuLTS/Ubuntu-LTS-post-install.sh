@@ -86,15 +86,15 @@ read -p "Is this the first time you run the post-install script? [y/n]: " CONFIR
 if [ "$CONFIRM" == "y" ]; then
 	# Update fstab.
 	echo -e "${HIGHLIGHT}Writing fstab config...${NC}"
-	sed -ie '/\s\/home\s/ s/defaults/defaults,noexec,nosuid,nodev/' /etc/fstab
+	sed -ie '/\s\/home\s/ s/defaults/defaults,exec,nosuid,nodev/' /etc/fstab
 	EXISTS=$(grep "/tmp/" /etc/fstab)
 	if [ -z "$EXISTS" ]; then
-		#echo "none /tmp tmpfs rw,noexec,nosuid,nodev 0 0" >> /etc/fstab
+		#echo "none /tmp tmpfs rw,exec,nosuid,nodev 0 0" >> /etc/fstab
  		echo "tmp Exists"
 	else
-		#sed -ie '/\s\/tmp\s/ s/defaults/defaults,noexec,nosuid,nodev/' /etc/fstab
+		#sed -ie '/\s\/tmp\s/ s/defaults/defaults,exec,nosuid,nodev/' /etc/fstab
 	fi
-	echo "none /run/shm tmpfs rw,noexec,nosuid,nodev 0 0" >> /etc/fstab
+	echo "none /run/shm tmpfs rw,exec,nosuid,nodev 0 0" >> /etc/fstab
 	# Bind /var/tmp to /tmp to apply the same mount options during system boot
  	echo "/tmp /var/tmp none bind 0 0" >> /etc/fstab
 	# Temporarily make the /tmp directory executable before running apt-get and remove execution flag afterwards. This is because
