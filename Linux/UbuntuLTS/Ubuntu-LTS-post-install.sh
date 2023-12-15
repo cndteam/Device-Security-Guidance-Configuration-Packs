@@ -103,9 +103,6 @@ if [ "$CONFIRM" == "y" ]; then
 	chmod 644 /etc/apt/apt.conf.d/99tmpexec
 fi
 
-# Setting /tmp as executable for Landscape Client Scripts, Landscape Packages up the Script that you build and stores it in /tmp folder and then executes. Because of this no scripts can run from our MDM solution without having access to /tmp.
-#ENTER SED COMMAND HERE#
-
 # Set grub password.
 echo -e "${HIGHLIGHT}Configuring grub...${NC}"
 echo "Please enter a grub sysadmin passphrase..."
